@@ -64,7 +64,7 @@ module.exports = function(grunt) {
 				file : "<config:meta.dist.max>",
 				description : "MediaElement-Cleaner - <%= meta.version %>"
 			},
-			"gollum.min.js" : {
+			"mecleaner.min.js" : {
 				repo : "normanzb/mediaelement-cleaner",
 				auth : "<%= [ meta.auth.username, meta.auth.password ].join(':') %>",
 				file : "<config:meta.dist.min>",
