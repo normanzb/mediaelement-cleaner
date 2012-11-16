@@ -6,6 +6,9 @@
  */
 (function(mejs, $){
 
+    var ARRAY_PROTO = Array.prototype;
+    var SLICE = ARRAY_PROTO.slice;
+
     if (!mejs){
         return;
     }
@@ -60,11 +63,20 @@
  
     var eventName = '__mejs_hack_dispose_on_removal';     
     var pluginMethod = $.fn.mediaelementplayer;
- 
-    $.fn.mediaelementplayer = function(){
-        $(this).bind(eventName, $.noop);
-        return pluginMethod.apply(this, arguments);
-    }    
+    var MediaElementPlayer = mejs.MediaElementPlayer;
+
+    mejs.MediaElementPlayer = function MediaElementPlayerWrapper(){
+        
+        mejs.MediaElementPlayer = MediaElementPlayer;
+        var ret = MediaElementPlayer.apply(null, arguments);
+        mejs.MediaElementPlayer = MediaElementPlayerWrapper;
+
+        if (ret.domNode){
+            $(ret.domNode).bind(eventName, $.noop);
+        }
+
+        return ret;
+    };
  
     $.event.special[eventName] = {
         /**
@@ -86,8 +98,10 @@
         teardown : function onActionTeardown(namespaces) {
             var player = this.player; 
             if (player){
+                // settimeout to make sure the disposing happen after
+                // the traversing of jquery, so it doesn't interfere 
                 setTimeout(function(){
-                player.dispose();
+                    player.dispose();
                 },0);
             }
         }         
