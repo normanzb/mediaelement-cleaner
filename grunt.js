@@ -33,11 +33,15 @@ module.exports = function(grunt) {
 				options : {
 					out : "<config:meta.dist.max>",
 					baseUrl : "./src/",
-					paths : {
-						"jquery" : "empty:"
-					},
 					name: 'mecleaner',
-					optimize : "none"
+					optimize : "none",
+					shim: {
+						'mecleaner': {
+							exports: function(){
+								return this.mejs;
+							}
+						}
+					}
 				}
 			}
 		},
