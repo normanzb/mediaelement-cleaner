@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-github-upload");
 
 	grunt.registerTask("test", "lint buster");
-	grunt.registerTask("dist", "describe requirejs concat min");
+	grunt.registerTask("dist", "describe copy min concat");
 	grunt.registerTask("default", "clean dist");
 
 	grunt.config.init({
@@ -28,26 +28,16 @@ module.exports = function(grunt) {
 		lint : {
 			src: [ "grunt.js", "src/*.js" ]
 		},
-		requirejs : {
-			dist : {
-				options : {
-					out : "<config:meta.dist.max>",
-					baseUrl : "./src/",
-					name: 'mecleaner',
-					optimize : "none",
-					shim: {
-						'mecleaner': {
-							exports: function(){
-								return this.mejs;
-							}
-						}
-					}
-				}
-			}
-		},
+		copy : {
+            dist : {
+                files : {
+                    "dist/" : "src/**"
+                }
+            }
+        },
 		concat : {
 			dist : {
-				src : [ "<banner>", "<config:requirejs.dist.options.out>" ],
+				src : [ "<banner>", "<config:meta.dist.max>" ],
 				dest : "<config:meta.dist.max>"
 			}
 		},
