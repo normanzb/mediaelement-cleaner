@@ -27,7 +27,10 @@
             divParent = me.media.pluginElement.parentNode;
         }
         
-        me.remove();
+        try{
+            me.remove();
+        }
+        catch(ex){}
         
         for(var l = players.length; l--;){
             if (players[l] === this){ 
