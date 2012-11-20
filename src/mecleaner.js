@@ -51,7 +51,7 @@
             this.media.parentNode.removeChild(this.media);
         }
         
-        delete this.domNode.player
+        delete this.node.player
         
         me.__disposed = true;
     }
