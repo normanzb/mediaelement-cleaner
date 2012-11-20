@@ -71,8 +71,8 @@
         var ret = MediaElementPlayer.apply(null, arguments);
         mejs.MediaElementPlayer = MediaElementPlayerWrapper;
 
-        if (ret.domNode){
-            $(ret.domNode).bind(eventName, $.noop);
+        if (ret.node){
+            $(ret.node).bind(eventName, $.noop);
         }
 
         return ret;
