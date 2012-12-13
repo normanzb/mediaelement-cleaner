@@ -51,7 +51,12 @@
             this.media.parentNode.removeChild(this.media);
         }
         
-        delete this.node.player
+        if (this.node){
+            try{
+                this.node.removeAttribute('player');
+            }
+            catch(ex){}
+        }
         
         me.__disposed = true;
     }
